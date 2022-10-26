@@ -208,7 +208,7 @@ git push origin :BRANCH 会删除远程的BRANCH分支
 `git commit -a`提交工作区与暂存区的变化直接到仓库区
 `git commit -v`提交时显示所有 diff 信息
 
-`git commit --amend -m M` 提交暂存区修改到仓库区，合并到上次修改，并修改上次的提交信息（使用新的注释M覆盖上一次注释，修改的是本地的commit，如果要同步到远程，需要使用`git push -f`强推）
+`git commit --amend -m M` 提交暂存区修改到仓库区，合并到上次修改，并修改上次的提交信息（使用新的注释M覆盖上一次注释，如果合并到的commit已经push到远程，本次的修改推送到远程需要使用`git push -f`强推，如果合并到的commit还没有推送到远程，则push的时候不需要强推。）
 `git commit --amend --no-edit` 和`git commit --amend -m M`的区别是这个命令不需要添加注释，即仍然使用上次的注释，如果上一次提交有漏提交的文件可以使用该命令，比如第一次commit只提交了文件file1，但是file2漏提交了，这时就可以用此命令，log记录还是上一次的Message，id也是上一次的
 
 ## git reset
