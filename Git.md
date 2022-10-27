@@ -42,7 +42,7 @@
 
 # 三、Git常见错误解决方法
 
-## 1.
+##  <a name="git_pull">1.git pull提示错误</a>
 
 * git提示：
 
@@ -208,7 +208,7 @@ git push origin :BRANCH 会删除远程的BRANCH分支
 `git commit -a`提交工作区与暂存区的变化直接到仓库区
 `git commit -v`提交时显示所有 diff 信息
 
-`git commit --amend -m M` 提交暂存区修改到仓库区，合并到上次修改，并修改上次的提交信息（使用新的注释M覆盖上一次注释，修改的是本地的commit，如果要同步到远程，需要使用`git push -f`强推）
+`git commit --amend -m M` 提交暂存区修改到仓库区，合并到上次修改，并修改上次的提交信息（使用新的注释M覆盖上一次注释，修改的是本地的commit，如果要同步到远程，需要使用`git push -f`强推，拉取代码出现错误请看前文[git pull提示错误](#git_pull)）
 `git commit --amend --no-edit` 和`git commit --amend -m M`的区别是这个命令不需要添加注释，即仍然使用上次的注释，如果上一次提交有漏提交的文件可以使用该命令，比如第一次commit只提交了文件file1，但是file2漏提交了，这时就可以用此命令，log记录还是上一次的Message，id也是上一次的
 
 ## git reset
@@ -221,6 +221,7 @@ git push origin :BRANCH 会删除远程的BRANCH分支
 `git reset head^`相当于`git reset --mixed head^`撤销最近一次的commit并且撤销add，修改的内容还会保存在本地
 
 ## git revert
+
 
 revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 
