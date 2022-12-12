@@ -1,4 +1,4 @@
-﻿# 一、Git常见使用方法
+# 一、Git常见使用方法
 
 ## 1. 忽略文件
 
@@ -81,6 +81,14 @@ git reset --hard origin/master
 
 `git push origin --delete NAME`直接删除远程分支NAME,不需要将NAME分支拉到本地
 
+* 查看本地分支基于那个分支创建
+
+`git reflog B`=`git reflog show B`show是缺省值，B是分支名，下同
+
+`git reflog show --date=local | grep B`查看merge和checkout记录
+
+第一种仅适用于查看从远程分支checkout到本地的分支，如果是本地直接新建分支，则第一种展示的create from HEAD，第二种可看最早时间的记录
+
 ## git tag
 
 `git tag TAG_NAME COMMIT_ID`创建一个tag，并让它指向COMMIT_ID(如果不指定comiit_id，默认使用HEAD)
@@ -134,11 +142,9 @@ git reset --hard origin/master
 
 `git rebase BRANCH` 将BRANCH分支添加到当前分支的前面（例如B1是从B创建的，B提交了很多内容，B1没有做任何更改，在B1分支下使用git rebase B，就会将B的所有更改同步到B1，此时B和B1完全一样）
 
-`git rebase B1 B2` 将B2分支添加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面）
-
 `git rebase BRANCH` 将当前分支附加到BRANCH后面，BRANCH可以是分支名，也可以是COMMIT_ID(会把当前分支中两个分支同一个父节点之后的所有COMMIT都添加到BRANCH后面)注意和git cherry-pick区别：两个命令操作的当前分支不同，rebase 的 BRANCH不会改变，当前分支会变化，cherry-pick是把COMMIT_ID复制到当前分支下，所以当前分支也会变化
 
-`git rebase BRANCH1 BRANCH2` 把BRANCH2附加到BRANCH1后面，和git checkout BRANCH2 + git rebase BRANCH1一样
+`git rebase B1 B2` 将B2分支附加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面），和`git checkout B2 + git rebase B1`一样
 
 `git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`
 
