@@ -146,7 +146,7 @@ git reset --hard origin/master
 
 `git rebase B1 B2` 将B2分支附加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面），和`git checkout B2 + git rebase B1`一样
 
-`git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`
+`git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`，如果要修改远程的提交记录，`git rebase -i`之后需要`git push -f`将本地的commit强制推送到远程
 
 * record 修改提交注释，不修改提交内容，关闭编辑器后会打开一个新的编辑器，输入新的注释保存并关闭
 
