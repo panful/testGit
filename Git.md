@@ -149,12 +149,11 @@ git reset --hard origin/master
 `git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`，如果要修改远程的提交记录，`git rebase -i`之后需要`git push -f`将本地的commit强制推送到远程
 
 * record 修改提交注释，不修改提交内容，关闭编辑器后会打开一个新的编辑器，输入新的注释保存并关闭
-
 * edit 修改提交内容，关闭编辑器后会进入`(BRANCH_NAME|REBASE-i m/n)`修改文件后`git add ;git commit -m`然后`git rebase --continue`即可
-
 * pick 不做任何修改
-
 * squash 合并提交，将多个commit合并为一个
+
+例如将最近三次提交合并为一个：`git rebase -i HEAD~3`在编辑器中最上面的pick不变，下面两个pick改为squash，保存之后会再打开一个编辑器，此时输入的是新的注释。修改完注释保存即可将最近三个commit合并为一个
 
 ## git merge
 
