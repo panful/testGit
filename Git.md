@@ -153,6 +153,7 @@ git reset --hard origin/master
 * pick 不做任何修改
 * squash 合并提交，将多个commit合并为一个，会将该commit合并到上面的commit中
 * fixup 和squash相似，会将注释丢弃，使用较早的注释描述合并的提交记录
+* drop 删除该commit，直接将这一行删除也可以删除该条commit
 
 例如将最近三次提交合并为一个：`git rebase -i HEAD~3`在编辑器中最上面的pick不变，下面两个pick改为squash，保存之后会再打开一个编辑器，此时输入的是新的注释。修改完注释保存，即可将最近三个commit合并为一个
 
