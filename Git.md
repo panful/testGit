@@ -28,6 +28,8 @@
 
 `git for-each-ref --sort=authordate --format='%(authorname) %(refname)' refs/remotes`只能输出该分支最后一次commit的作者是谁，并不能输出由谁创建该分支
 
+.git\refs\heads\BRANCH文件就是BRANCH分支的最后一次提交id
+
 * 查看FILE文件每一行是由谁最后提交的
 
 `git blame FILE` 
@@ -201,7 +203,7 @@ git push origin :BRANCH 会删除远程的BRANCH分支
 
 ## git remote
 
-`git remote -v`显示远程仓库的地址
+`git remote -v`显示远程仓库的地址（可以查看url是http还是ssh）
 
 `git remote prune origin`同步远程分支，将远程已经删了的分支本地也删除（删除的是本地的远程分支，不是本地的本地分支，本地的本地分支可以使用`git branch -d NAME`来删除）
 
