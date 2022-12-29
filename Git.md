@@ -87,6 +87,8 @@ git reset --hard origin/BRANCH
 
 `git branch –d NAME`删除本地分支NAME
 
+`git branch -m NEW_NAME`将当前分支名改为NEW_NAME
+
 `git branch --set-upstream-to B origin/B`将本地的B和远程的B进行关联，设置过关联之后我们只需要git push和git pull就可以更新和推送这个分支了，不然推送新的分支到远程之后，不能直接对这个新的远程分支进行git push操作
 
 `git push origin --delete NAME`直接删除远程分支NAME,不需要将NAME分支拉到本地
@@ -171,13 +173,7 @@ git reset --hard origin/BRANCH
 
 ## git push
 
-`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错
-
-git push <remote> <place> 将本地的 place提交到远程仓库（不需要切换到place分支）
-
-git push origin <source>:<destination> 将本地的source分支推动到远程仓库中的destination分支
-
-git push origin :BRANCH 会删除远程的BRANCH分支
+`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错，并不会将远程分支和本地分支关联，即要对B分支进行push操作还需要执行`git push --set-upstream origin B`
 
 ## git fetch
 
