@@ -20,9 +20,13 @@
 
 ## 2.查看作者
 
-* 查看分支创建作者
+* 查看分支创建作者（git不能获取分支的创建者）
 
-`git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n`
+分支只是一个提交指针，并不会保存作者信息，因此没法获取分支的创建者
+
+`git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)'`
+
+`git for-each-ref --sort=authordate --format='%(authorname) %(refname)' refs/remotes`只能输出该分支最后一次commit的作者是谁，并不能输出由谁创建该分支
 
 * 查看FILE文件每一行是由谁最后提交的
 
@@ -87,9 +91,9 @@ git reset --hard origin/BRANCH
 
 * 查看本地分支基于那个分支创建
 
-`git reflog B`或`git reflog show B`show是缺省值，B是分支名，仅适用于查看从**远程分支**checkout到本地的分支，如果是本地直接新建分支，则仅仅展示create from HEAD，不能获取到从哪个分支创建（可以查看对该分支进行了那些操作，即git命令）
+`git reflog B`或`git reflog show B`show是缺省值，B是分支名，仅适用于查看从**远程分支**checkout到本地的分支，如果是本地直接新建分支，则仅仅展示create from HEAD，不能获取到从哪个分支创建。可以查看对该分支进行了那些操作，即git命令
 
-`git reflog show --date=local | grep B`查看merge、checkout、rebase等操作的记录（grep使用方法自行查阅）
+`git reflog show --date=local | grep B`查看merge、checkout、rebase等操作的记录，可以看到分支B是从那个分支创建的（grep使用方法自行查阅）
 
 ## git tag
 
