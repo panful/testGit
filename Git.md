@@ -79,6 +79,8 @@ git reset --hard origin/BRANCH
 
 `git log --oneline B`或`git log B --oneline` 查看B分支的log，仅显示版本hash值前8位和注释
 
+`git log -n NUM`仅显示最近的NUM条log（可以配合重定向符将log打印到文件中，例如`git log -n 10 > log.txt`将最近的10条log打印到文件log.txt）
+
 ## git branch
 
 `git branch` 查看当前分支
