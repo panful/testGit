@@ -52,22 +52,26 @@ Your branch and 'origin/master' have diverged,
 nothing to commit, working tree clean
 ```
 
-* 解决方法(master是远程分支名)：
+* 解决方法(BRANCH是远程分支名)：
 
 ```bash
 git fetch origin
-git reset --hard origin/master
+git reset --hard origin/BRANCH
 ```
 
 # 四、Git常用命令
 
 ## git log
 
-`git log --graph`
+`git log --graph` 图形显示log
 
 `git log --pretty=oneline`仅显示版本hash值和注释，`=`两边不要加空格
 
 `git log --oneline`仅显示版本hash值前8位和注释
+
+`git log BRANCH`查看BRANCH分支的log
+
+`git log --oneline B`或`git log B --oneline` 查看B分支的log，仅显示版本hash值前8位和注释
 
 ## git branch
 
@@ -83,11 +87,9 @@ git reset --hard origin/master
 
 * 查看本地分支基于那个分支创建
 
-`git reflog B`=`git reflog show B`show是缺省值，B是分支名，下同
+`git reflog B`或`git reflog show B`show是缺省值，B是分支名，仅适用于查看从**远程分支**checkout到本地的分支，如果是本地直接新建分支，则仅仅展示create from HEAD，不能获取到从哪个分支创建（可以查看对该分支进行了那些操作，即git命令）
 
-`git reflog show --date=local | grep B`查看merge和checkout记录
-
-第一种仅适用于查看从远程分支checkout到本地的分支，如果是本地直接新建分支，则第一种展示的create from HEAD，第二种可看最早时间的记录
+`git reflog show --date=local | grep B`查看merge、checkout、rebase等操作的记录（grep使用方法自行查阅）
 
 ## git tag
 
@@ -105,11 +107,11 @@ git reset --hard origin/master
 
 `git switch B`切换到分支B
 
-`git switch -c B`创建并切换到分支B
+`git switch -c B` （create）创建并切换到分支B
 
 `git switch -c B C_T`以一个commit id或tag来创建一个分支B，并切换到分支B
 
-`git switch --detach C`切换到某一个commit id C但是不创建新的分支，可以查看这个记录之前的修改情况
+`git switch -d C`（detach）切换到某一个commit id C但是不创建新的分支，可以查看这个记录之前的修改情况
 
 `git switch --orphan B`创建一个没有任何提交记录的分支B，删除所有跟踪文件
 
@@ -140,11 +142,9 @@ git reset --hard origin/master
 
 ## git rebase
 
-`git rebase BRANCH` 将BRANCH分支添加到当前分支的前面（例如B1是从B创建的，B提交了很多内容，B1没有做任何更改，在B1分支下使用git rebase B，就会将B的所有更改同步到B1，此时B和B1完全一样）
+`git rebase BRANCH` 将BRANCH分支添加到当前分支的前面（例如B1是从B创建的，B提交了很多内容，B1没有做任何更改，在B1分支下使用git rebase B，就会将B的所有更改同步到B1，此时B和B1完全一样）BRANCH可以是分支名，也可以是COMMIT_ID(会把当前分支中两个分支同一个父节点之后的所有COMMIT都添加到当前分支)注意和git cherry-pick区别：两个命令操作的当前分支不同，rebase 的 BRANCH不会改变，当前分支会变化，cherry-pick是把COMMIT_ID复制到当前分支下，所以当前分支也会变化
 
-`git rebase BRANCH` 将当前分支附加到BRANCH后面，BRANCH可以是分支名，也可以是COMMIT_ID(会把当前分支中两个分支同一个父节点之后的所有COMMIT都添加到BRANCH后面)注意和git cherry-pick区别：两个命令操作的当前分支不同，rebase 的 BRANCH不会改变，当前分支会变化，cherry-pick是把COMMIT_ID复制到当前分支下，所以当前分支也会变化
-
-`git rebase B1 B2` 将B2分支附加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面），和`git checkout B2 + git rebase B1`一样
+`git rebase B1 B2` 将B2分支附加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面），和`git switch B2 + git rebase B1`一样
 
 `git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次，在打开的编辑器中先提交的在最上面，即最下面的commit是最新的提交)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`，如果要修改远程的提交记录，`git rebase -i`之后需要`git push -f`将本地的commit强制推送到远程
 
@@ -157,7 +157,7 @@ git reset --hard origin/master
 
 例如将最近三次提交合并为一个：`git rebase -i HEAD~3`在编辑器中最上面的pick不变，下面两个pick改为squash，保存之后会再打开一个编辑器，此时输入的是新的注释。修改完注释保存，即可将最近三个commit合并为一个
 
-例如将最近的第三次提交修改：`git rebase -i HEAD~3` 进入编辑器之后将第一行的pick改为edit后保存文件，此时可以对这次提交的内容进行修改（就相当于进入了提交本次commit之前的状态），修改完之后`git add .`将修改的内容保存到暂存区，然后使用`git commit --amend`对本次提交的注释进行修改，修改完保存文件，然后使用`git rebase --continue`完成本次修改
+例如将最近的第三次提交修改：`git rebase -i HEAD~3` 进入编辑器之后将第一行的pick改为edit后保存文件，此时可以对这次提交的内容进行修改（就相当于进入了提交本次commit之前的状态），修改完之后`git add .`将修改的内容保存到暂存区，然后使用`git commit --amend`对本次提交的注释进行修改，修改完保存文件，然后使用`git rebase --continue`完成本次修改（执行完该命令可能会有冲突，解决完冲突后使用`git add .`再使用`git rebase --continue`即可完成）
 
 ## git merge
 
