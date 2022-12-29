@@ -87,7 +87,7 @@ git reset --hard origin/BRANCH
 
 `git branch –d NAME`删除本地分支NAME
 
-`git branch -m NEW_NAME`将当前分支名改为NEW_NAME
+`git branch -m NAME`将当前分支的名称修改为NAME
 
 `git branch --set-upstream-to B origin/B`将本地的B和远程的B进行关联，设置过关联之后我们只需要git push和git pull就可以更新和推送这个分支了，不然推送新的分支到远程之后，不能直接对这个新的远程分支进行git push操作
 
@@ -156,7 +156,7 @@ git reset --hard origin/BRANCH
 
 `git rebase -i HEAD~3` 修改当前分支最近3次的提交记录(HEAD~n 最近n次，在打开的编辑器中先提交的在最上面，即最下面的commit是最新的提交)，如果不需要做任何修改，只需要关闭打开的编辑器，然后`git pull --rebase`，请勿使用`git pull`，如果要修改远程的提交记录，`git rebase -i`之后需要`git push -f`将本地的commit强制推送到远程
 
-* record 修改提交注释，不修改提交内容，关闭编辑器后会打开一个新的编辑器，输入新的注释保存并关闭（如果只是修改最近一次的提交记录可以使用`git commit --amend -m M`
+* record 修改提交注释，不修改提交内容，关闭编辑器后会打开一个新的编辑器，输入新的注释保存并关闭（如果只是修改最近一次的提交记录可以使用`git commit --amend -m M`）
 * edit 修改提交内容，关闭编辑器后会进入`(BRANCH_NAME|REBASE-i m/n)`修改文件后`git add ;git commit -m`然后`git rebase --continue`即可
 * pick 不做任何修改
 * squash 合并提交，将多个commit合并为一个，会将该commit合并到上面的commit中
@@ -173,7 +173,7 @@ git reset --hard origin/BRANCH
 
 ## git push
 
-`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错，并不会将远程分支和本地分支关联，即要对B分支进行push操作还需要执行`git push --set-upstream origin B`
+`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错，并不会将远程分支和本地分支进行关联，即如果要对B分支进行push等操作还需要设置上游分支`git push --set-upstream origin B`
 
 ## git fetch
 
