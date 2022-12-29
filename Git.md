@@ -101,6 +101,8 @@ git reset --hard origin/BRANCH
 
 `git reflog show --date=local | grep B`查看merge、checkout、rebase等操作的记录，可以看到分支B是从那个分支创建的（grep使用方法自行查阅）
 
+`git reflog`并不是git仓库的一部分，它完全是属于本地的东西（git clone之后用户所有在本地的操作），.git/logs/HEAD文件或.git/logs/refs目录中的文件的内容就是`git reflog`命令的结果，所有引起HEAD指针变化的操作都会被存储在这些文件中
+
 ## git tag
 
 `git tag TAG_NAME COMMIT_ID`创建一个tag，并让它指向COMMIT_ID(如果不指定comiit_id，默认使用HEAD)
