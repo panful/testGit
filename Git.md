@@ -93,7 +93,7 @@ git reset --hard origin/BRANCH
 
 `git branch --set-upstream-to B origin/B`将本地的B和远程的B进行关联，设置过关联之后我们只需要git push和git pull就可以更新和推送这个分支了，不然推送新的分支到远程之后，不能直接对这个新的远程分支进行git push操作
 
-`git push origin --delete NAME`直接删除远程分支NAME,不需要将NAME分支拉到本地
+`git push origin --delete NAME`或`git push origin -d NAME`直接删除远程分支NAME,不需要将NAME分支拉到本地
 
 * 查看本地分支基于那个分支创建
 
@@ -154,7 +154,7 @@ git reset --hard origin/BRANCH
 
 ## git rebase
 
-`git rebase BRANCH` 将BRANCH分支添加到当前分支的前面（例如B1是从B创建的，B提交了很多内容，B1没有做任何更改，在B1分支下使用git rebase B，就会将B的所有更改同步到B1，此时B和B1完全一样）BRANCH可以是分支名，也可以是COMMIT_ID(会把当前分支中两个分支同一个父节点之后的所有COMMIT都添加到当前分支)注意和git cherry-pick区别：两个命令操作的当前分支不同，rebase 的 BRANCH不会改变，当前分支会变化，cherry-pick是把COMMIT_ID复制到当前分支下，所以当前分支也会变化
+`git rebase BRANCH` 将BRANCH分支添加到当前分支的前面，就是将HEAD指针指向最新的提交（例如B1是从B创建的，B提交了很多内容，B1没有做任何更改，在B1分支下使用git rebase B，就会将B的所有更改同步到B1，此时B和B1完全一样）BRANCH可以是分支名，也可以是COMMIT_ID(会把当前分支中两个分支同一个父节点之后的所有COMMIT都添加到当前分支)注意和git cherry-pick区别：两个命令操作的当前分支不同，rebase 的 BRANCH不会改变，当前分支会变化，cherry-pick是把COMMIT_ID复制到当前分支下，所以当前分支也会变化
 
 `git rebase B1 B2` 将B2分支附加到B1分支的后面，（会将B2分支中，从两个分支同一个父节点之后的所有commit添加到B1后面），和`git switch B2 + git rebase B1`一样
 
@@ -177,7 +177,9 @@ git reset --hard origin/BRANCH
 
 ## git push
 
-`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错，并不会将远程分支和本地分支进行关联，即如果要对B分支进行push等操作还需要设置上游分支`git push --set-upstream origin B`
+`git push origin B`将本地的B分支推送到远程，远程分支名为B，如果本地没有B分支会报错，并不会将远程分支和本地分支进行关联，即如果要对B分支进行push等操作还需要设置上游分支`git push --set-upstream origin B`或`git push -u origin B`
+
+`git push origin B:B`或`git push origin B`或`git push`如果当前分支是B时，这三个等价，都是将本地的B分支推送到远程的B分支
 
 ## git fetch
 
@@ -228,12 +230,12 @@ git reset --hard origin/BRANCH
 
 ## git reset
 
-`git reset --hard head^`撤销最近一次的commit，例如对某一文件进行了修改并执行了add和commit操作，执行完该命令之后，修改过的文件会恢复到上一版本的内容，本地修改的内容会被覆盖谨慎使用，`head^`指上一次的commit id， `head`指最近一次的commit id
+`git reset --hard HEAD^`撤销最近一次的commit，例如对某一文件进行了修改并执行了add和commit操作，执行完该命令之后，修改过的文件会恢复到上一版本的内容，本地修改的内容会被覆盖谨慎使用，`HEAD^`指上一次的commit id， `HEAD`指最近一次的commit id
 
 `git reset --hard COMMIT_ID`恢复到COMMIT_ID对应的历史，不建议使用
 
-`git reset --soft head^`撤销最近一次的commit，不会撤销add操作，保留最近一次的commit内容（即最近一次commit的内容会恢复到本地）`head^`表示最近一次，如果要恢复多次请使用`head~i`，i表示最近几次
-`git reset head^`相当于`git reset --mixed head^`撤销最近一次的commit并且撤销add，修改的内容还会保存在本地
+`git reset --soft HEAD^`撤销最近一次的commit，不会撤销add操作，保留最近一次的commit内容（即最近一次commit的内容会恢复到本地）`HEAD^`表示最近一次，如果要恢复多次请使用`HEAD~i`，i表示最近几次
+`git reset HEAD^`相当于`git reset --mixed HEAD^`撤销最近一次的commit并且撤销add，修改的内容还会保存在本地
 
 ## git revert
 
@@ -252,7 +254,7 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 
 + `git revert `是用一次新的commit来回滚之前的commit，此次提交之前的commit都会被保留；
 
-+ `git reset`是回到某次提交，指定的commit以及之前的commit都会被保留，但是此commit id之后的修改都会被删除
++ `git reset`是回到某次提交(HEAD指向某次提交），指定的commit以及之前的commit都会被保留，但是此commit id之后的修改都会被删除
 
 ## git cherry-pick
 
