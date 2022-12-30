@@ -222,7 +222,7 @@ git reset --hard origin/BRANCH
 ## git commit
 
 `git commit -m M`提交暂存区(使用 `git add`会提交到暂存区）到仓库区，M是注释，注释需要加上`''`（如果注释没有空格换行等字符，可以不加`''`,建议都加上）
-`git commit -a`提交工作区与暂存区的变化直接到仓库区
+`git commit -a`提交工作区与暂存区的变化直接到仓库区，不能将新建的文件添加到暂存区或仓库区
 `git commit -v`提交时显示所有 diff 信息
 
 `git commit --amend -m M` 提交暂存区修改到仓库区，合并到上次修改，并修改上次的提交信息（使用新的注释M覆盖上一次注释，修改的是本地的commit，如果要同步到远程，需要使用`git push -f`强推，拉取代码出现错误请看前文[git pull提示错误](#git_pull)）
