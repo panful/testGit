@@ -6,11 +6,11 @@
 
 .gitignore 需要提交到git仓库
 
-.git/info/exclude 不需要提交到git仓库，可以用来忽略个人的一些测试文件，只能忽略没有被git跟踪的文件，根目录从.gitignore所在目录开始
+`.git/info/exclude` 不需要提交到git仓库，可以用来忽略个人的一些测试文件，只能忽略没有被git跟踪的文件，根目录从.gitignore所在目录开始，例如：`/test.txt`或`test.txt`都是忽略test.txt文件，不能是`./test.txt`
 
 * 命令行
 
-`git update-index --assume-unchanged FILE_NAME`忽略git已经跟踪的FILE_NAME文件
+`git update-index --assume-unchanged FILE_NAME`忽略git已经跟踪的FILE_NAME文件，只能忽略文件不能是文件夹
 
 `git update-index --no-assume-unchanged FILE_NAME`恢复跟踪FILE_NAME文件
 
