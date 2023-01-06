@@ -3,10 +3,9 @@
 ## 1. 忽略文件
 
 * 修改文件
-
-.gitignore 需要提交到git仓库
-
-`.git/info/exclude` 不需要提交到git仓库，可以用来忽略个人的一些测试文件，只能忽略没有被git跟踪的文件，根目录从.gitignore所在目录开始，例如：`/test.txt`或`test.txt`都是忽略test.txt文件，不能是`./test.txt`
+    - 修改`.gitignore`文件，需要提交到git仓库
+    
+    - 修改`.git/info/exclude` 文件，不需要提交到git仓库，可以用来忽略个人的一些测试文件，只能忽略没有被git跟踪的文件，根目录从`.gitignore`所在目录开始，例如：`/test.txt`或`test.txt`都是忽略`test.txt`文件，不能是`./test.txt`；和文件夹没关系，例如给`.git/info/exclude` 文件添加一行`/folder`，只会对`/floder`文件夹内的本地文件生效。
 
 * 命令行
 
