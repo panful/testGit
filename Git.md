@@ -338,3 +338,7 @@ $ git submodule update --remote xxx // 指定需要同步的子模块
 ### 设置子模块的分支
 
 `git config -f .gitmodules submodule.SubModuleName.branch BranchName`将子模块`SubModuleName`的分支指定为`BranchName`，子模块名可以在`.gitmodules`文件查看
+
+`git submodule set-branch -b BranchName Path` `BranchName`是需要设置的分支名，`Path`是需要指定分支的子模块名，就是`.gitmodules`中的path
+
+设置了分支，拉取的子模块还是没有更改分支，不知为何，后续再改
