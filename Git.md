@@ -312,9 +312,22 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 
 ### 添加子模块
 
-`git submodule add url` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP` `cd SubModule`，`git submodule add  git@github.com:Yangpan08/testCPP.git`
+`git submodule add url path` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP `，`git submodule add git@github.com:Yangpan08/testCPP.git SubModule/testCPP`
 
 然后将之前的操作提交到远程仓库即可：`git add .`，`git commit -m "注释：添加子模块"`，`git push`
+
+如果报错：
+
+```
+fatal: A git directory for 'xxx' is found locally with remote(s):
+  origin        xxx
+If you want to reuse this local git directory instead of cloning again from
+  xxx
+use the '--force' option. If the local git directory is not the correct repo
+or you are unsure what this means choose another name with the '--name' option.
+```
+
+将`.git/modules`目录下对应的文件夹删除，如果还报错请执行：`git rm -r --cached XXX`将对应的子模块缓存删除
 
 ### 拉取子模块
 
@@ -326,8 +339,8 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 - 在父目录中操作
 
 ```shell
-$ git submodule update 				// 与主仓库中的子模块代码同步
-$ git submodule update --remote 	// 与子仓库中代码同步（同步所有的子模块）
+$ git submodule update              // 与主仓库中的子模块代码同步
+$ git submodule update --remote     // 与子仓库中代码同步（同步所有的子模块）
 $ git submodule update --remote xxx // 指定需要同步的子模块
 ```
 
