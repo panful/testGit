@@ -307,3 +307,34 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 ## git show
 
 `git show COMMIT_ID`显示COMMIT_ID提交了那些内容
+
+## 子模块
+
+### 添加子模块
+
+`git submodule add url` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP` `cd SubModule`，`git submodule add  git@github.com:Yangpan08/testCPP.git`
+
+然后将之前的操作提交到远程仓库即可：`git add .`，`git commit -m "注释：添加子模块"`，`git push`
+
+### 拉取子模块
+
+- 首次克隆仓库：`git clone --recursive url`url是仓库的地址
+- 已经拉取了父仓库，子模块没有拉取 `git submodule update --init --recursive`，`git pull --recurse-submodules`
+
+### 更新子模块
+
+- 在父目录中操作
+
+```shell
+$ git submodule update 				// 与主仓库中的子模块代码同步
+$ git submodule update --remote 	// 与子仓库中代码同步（同步所有的子模块）
+$ git submodule update --remote xxx // 指定需要同步的子模块
+```
+
+- 在子模块目录中操作
+
+`git pull`
+
+### 设置子模块的分支
+
+`git config -f .gitmodules submodule.SubModuleName.branch BranchName`将子模块`SubModuleName`的分支指定为`BranchName`，子模块名可以在`.gitmodules`文件查看
