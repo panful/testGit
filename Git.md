@@ -33,6 +33,12 @@
 
 `git blame FILE` 
 
+## 3.git钩子
+
+[Hello Git（六）——Git钩子_git 钩子_天山老妖的博客-CSDN博客](https://blog.csdn.net/A642960662/article/details/123088970)
+
+服务器端钩子在某些服务器中是不允许使用的，可以把钩子保存在仓库的某个地方，然后创建一个脚本把它们复制到`.git/hooks`目录中。
+
 # 二、Git常用关键字
 
 ## 1.HEAD
