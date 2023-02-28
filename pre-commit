@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# 定义正则表达式，用于匹配不是 UTF-8 或 ASCII 编码的文件
+regex="^.*:\s(error|warning):\s(.*\S)\s(\S+)\s*"
+
+# 检查提交的文件编码是否是 UTF-8 或 ASCII
+files=$(git diff --cached --name-only --diff-filter=ACM)
+for file in $files; do
+  encoding=$(file -b --mime-encoding $file)
+  if [ "$encoding" != "utf-8" ] && [ "$encoding" != "us-ascii" ]; then
+    # 输出错误信息
+    error_message="Error: $file is not UTF-8 or ASCII encoded"
+    printf "%s\n" "$error_message" >&2
+
+    # 输出 Git 提交命令行输出的错误信息
+    git diff --cached --color=always $file | grep -E "$regex" | sed "s/^/$file: /"
+
+    # 禁止提交
+    exit 1
+  fi
+done
