@@ -1,4 +1,4 @@
-﻿# 一、Git常见使用方法
+# 一、Git常见使用方法
 
 ## 1. 忽略文件
 
@@ -94,7 +94,7 @@ git reset --hard origin/BRANCH
 
 `git branch –d NAME`删除本地分支NAME
 
-`git branch -m NAME`将当前分支的名称修改为NAME
+`git branch -m NAME`将当前分支的名称修改为NAME（修改的是本地分支）。修改远程仓库的分支名，可以将远程原分支删除，然后将新的分支推送上去，再重新设置上游分支。完整步骤（old是原分支名，new是新分支名）：`git branch -m old new` -> `git push origin :old new` -> `git push -u origin new`
 
 `git branch -m name newName`将分支name改为newName
 
@@ -187,6 +187,8 @@ git reset --hard origin/BRANCH
 `git push origin B:B`或`git push origin B`或`git push`如果当前分支是B时，这三个等价，都是将本地的B分支推送到远程的B分支
 
 `git push origin --delete NAME`或`git push origin -d NAME`直接删除远程分支NAME,不需要将NAME分支拉到本地
+
+`git push origin :B1 B2`将B2分支推送到远程仓库，并删除远程仓库的B1分支
 
 ## git fetch
 
