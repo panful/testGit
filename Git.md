@@ -1,4 +1,4 @@
-# 一、Git常见使用方法
+﻿# 一、Git常见使用方法
 
 ## 1. 忽略文件
 
@@ -90,7 +90,7 @@ git reset --hard origin/BRANCH
 
 `git branch` 查看当前分支
 
-`git branch -f BRANCH HEAD~3 `将BRANCH分支强制指向HEAD的第3级父提交(HEAD~n也可以是分支名，就相当于两个分支指向同一个节点，有时和git rebase 有相同的效果)
+`git branch -f BRANCH C_ID `将BRANCH分支强制指向C_ID(C_ID可以是commit id，也可以是HEAD指针，甚至可以是分支名。如果是分支名，就相当于将两个分支保持完全一致。执行该命令必须在非BRANCH分支下执行，在BRANCH分支下执行`git reset --hard C_ID`和该命令效果一致。有时和git rebase 也有相同的效果)
 
 `git branch –d NAME`删除本地分支NAME
 
@@ -243,6 +243,8 @@ git reset --hard origin/BRANCH
 
 `git reset --soft HEAD^`撤销最近一次的commit，不会撤销add操作，保留最近一次的commit内容（即最近一次commit的内容会恢复到本地）`HEAD^`表示最近一次，如果要恢复多次请使用`HEAD~i`，i表示最近几次
 `git reset HEAD^`相当于`git reset --mixed HEAD^`撤销最近一次的commit并且撤销add，修改的内容还会保存在本地
+
+`git reset --hard B`将当前分支修改为和B分支完全一样，相当于基于B分支创建了一个新的当前分支，需要使用`git push -f`强制推到远程
 
 ## git revert
 
