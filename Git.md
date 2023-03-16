@@ -72,6 +72,16 @@ git reset --hard origin/BRANCH
 
 # 四、Git常用命令
 
+## git clone
+
+`git clone --depth N URL`N是正整数，表示克隆最近N条提交记录
+
+`git clone -b B URL`克隆代码时直接切换到B分支
+
+`git clone -b B --single-branch URL`克隆代码时直接切换到B分支，且只fetchB分支，即使用`git branch -a`只能看到B分支
+
+使用`git clone --depth N`克隆代码后，无法获取其他分支的解决办法：`git remote set-branches origin B2` `git fetch --depth 1 origin B2`B2是要获取的其他分支的名称
+
 ## git log
 
 `git log --graph` 图形显示log
