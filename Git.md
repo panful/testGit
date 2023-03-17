@@ -159,7 +159,9 @@ git reset --hard origin/BRANCH
 
 `git checkout -- FILE_NAME`将文件FILE_NAME修改的内容撤销，适用于还没使用`add/commit`等命令时，`--`两边都有一个空格，可以用`.`代替FILE_NAME，如果不小心删除了本地文件，也可以用此命令恢复
 
-`git checkout B -- FILE_NAME`可以把当前分支中的FILE_NAME文件切换成B分支中的文件
+`git checkout B -- FILE_NAME`可以把当前分支中的FILE_NAME文件切换成B分支中的文件，和`git checkout B FILE_NAME`效果一样
+
+`git checkout --patch B FILE_NAME`将B分支上的FILE_NAME文件合并到当前分支的对应文件上，可以在控制台接受或拒绝变更内容，和`git checkout B -- FILE_NAME`的区别就是这个命令会征求你的意见是否替换某个变更，而不带`--patch`的命令会直接覆盖文件。
 
 **设置远程跟踪（remote tracking)的两种方法**
 
@@ -189,6 +191,8 @@ git reset --hard origin/BRANCH
 ## git merge
 
 `git merge BRANCH` 将BRANCH合并到当前分支，只能带一个参数
+
+只将某个分支的某个文件合并到当前分支可以使用`git checkout --patch B FILE`用法见上。
 
 ## git push
 
@@ -233,6 +237,8 @@ git reset --hard origin/BRANCH
 `git diff C1 C2` 比较两个commit id ：C1 和 C2的区别
 
 `git difftool c1 c2`使用工具比较两个commit的区别
+
+`git diff B1 B2 FILE`比较分支B1和分支B2中，FILE文件的差异。
 
 `git diff B1 B2 --stat` 比较分支B1和分支B2，本地未提交的内容不会比较 ，本地已经commit的内容才会比较
 
