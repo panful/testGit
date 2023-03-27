@@ -232,6 +232,8 @@ git reset --hard origin/BRANCH
 
 `git remote prune origin`同步远程分支，将远程已经删了的分支本地也删除（删除的是本地的远程分支，不是本地的本地分支，本地的本地分支可以使用`git branch -d NAME`来删除）
 
+`git remote add origin URL`将本地的分支推送到远程，如果报错：`fatal:remote origin already exists`，先使用`git remote rm origin`清除关联；查看是否建立连接成功：`git remote -v`；拉取远程内容：`git pull --rebase origin BRANCH`
+
 ## git diff
 
 `git diff C1 C2` 比较两个commit id ：C1 和 C2的区别
