@@ -340,10 +340,21 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 
 ### 添加子模块
 
-`git submodule add url path` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP `，`git submodule add git@github.com:Yangpan08/testCPP.git SubModule/testCPP`
+`git submodule add url path` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP`
 
-然后将之前的操作提交到远程仓库即可：`git add .`，`git commit -m "注释：添加子模块"`，`git push`
+```shell
+git submodule add git@github.com:Yangpan08/testCPP.git SubModule/testCPP
+```
 
+注意：不能存在文件夹`SubModule/testCPP`，执行上面的命令，会自动创建`testCPP`文件夹并将仓库克隆到该文件夹
+
+然后将之前的操作提交推送到远程仓库即可：
+
+```shell
+git add .
+git commit -m "注释：添加子模块"
+git push
+```
 如果报错：
 
 ```
@@ -361,6 +372,7 @@ or you are unsure what this means choose another name with the '--name' option.
 
 - 首次克隆仓库：`git clone --recursive url`url是仓库的地址
 - 已经拉取了父仓库，子模块没有拉取 `git submodule update --init --recursive`，`git pull --recurse-submodules`
+- 已经拉取了父仓库，子模块没有拉取 `git submodule update --init`
 
 ### 更新子模块
 
@@ -374,12 +386,23 @@ $ git submodule update --remote xxx // 指定需要同步的子模块
 
 - 在子模块目录中操作
 
-`git pull`
+```shell
+git pull
+```
+
+**注意**：如果更新了子模块使用`git status`会提示：`new commits`，是因为本地的子模块和远程的子模块的commit ID不一致，可以根据需要提交更改或丢弃。
+
+`modified content` ：代码有修改但未提交, `new commits`：代码修改并提交
+
+可以直接在 `.gitmodules` 文件里面加上 `ignore = all` 忽略掉所有的主模块与子模块的关联
+
 
 ### 设置子模块的分支
 
 `git config -f .gitmodules submodule.SubModuleName.branch BranchName`将子模块`SubModuleName`的分支指定为`BranchName`，子模块名可以在`.gitmodules`文件查看
 
-`git submodule set-branch -b BranchName Path` `BranchName`是需要设置的分支名，`Path`是需要指定分支的子模块名，就是`.gitmodules`中的path
+`git submodule set-branch -b BranchName Path` `BranchName`是需要设置的分支名，`Path`是需要指定分支的子模块名，就是`.gitmodules`中的path，或者直接修改.gitmodules文件即可`branch =  BranchName`
 
-设置了分支，拉取的子模块还是没有更改分支，不知为何，后续再改
+
+
+**设置了分支，拉取的子模块还是没有更改分支，不知为何，后续再改**
