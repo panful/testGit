@@ -222,9 +222,13 @@ git reset --hard origin/BRANCH
 
 `git pull --rebase` 是 `git fetch` 和 `git rebase` 的简写
 
+`git pull --rebase origin B`如果当前在A分支执行该命令，相当于`git fetch; git rebase origin/B`
+
+`git pull --rebase origin B1:B2`相当于在B2分支下执行`git pull --rebase origin B1`
+
 `git pull origin B` 相当于`git fetch origin B;git merge B`
 
-`git pull origin B1:B2`相当于 `git fetch origin B1:B2;git merge B2`
+`git pull origin B1:B2`将远程的B1分支合并到本地的B2分支，可能会产生合并记录，相当于 `git fetch origin B1:B2;git merge B2`
 
 ## git remote
 
@@ -234,6 +238,7 @@ git reset --hard origin/BRANCH
 
 `git remote add origin URL`将本地的分支推送到远程，如果报错：`fatal:remote origin already exists`，先使用`git remote rm origin`清除关联；查看是否建立连接成功：`git remote -v`；拉取远程内容：`git pull --rebase origin BRANCH`
 
+`git remote set-url origin URL`设置当前仓库远程的URL，如果当前仓库的远程地址修改了可以使用该命令
 ## git diff
 
 `git diff C1 C2` 比较两个commit id ：C1 和 C2的区别
