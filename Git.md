@@ -102,7 +102,9 @@ git reset --hard origin/BRANCH
 
 `git branch -f BRANCH C_ID `将BRANCH分支强制指向C_ID(C_ID可以是commit id，也可以是HEAD指针，甚至可以是分支名。如果是分支名，就相当于将两个分支保持完全一致。执行该命令必须在非BRANCH分支下执行，在BRANCH分支下执行`git reset --hard C_ID`和该命令效果一致。有时和git rebase 也有相同的效果)
 
-`git branch –d NAME`删除本地分支NAME
+`git branch –d NAME`删除本地分支NAME，在删除前会检查该分支的合并状态。如果该分支的修改内容已经合并到其他分支中，那么这个命令将成功删除该分支。然而，如果该分支还有未合并的提交，该命令会失败，以防止因误删除而导致修改内容的丢失
+
+`git branch -D NAME`是 `git branch --delete --force NAME`的简写，它会直接删除目标分支，无论该分支是否已合并。
 
 `git branch -m NAME`将当前分支的名称修改为NAME（修改的是本地分支）。修改远程仓库的分支名，可以将远程原分支删除，然后将新的分支推送上去，再重新设置上游分支。完整步骤（old是原分支名，new是新分支名）：`git branch -m old new` -> `git push origin :old new` -> `git push -u origin new`
 
@@ -163,7 +165,7 @@ git reset --hard origin/BRANCH
 
 `git checkout --patch B FILE_NAME`将B分支上的FILE_NAME文件合并到当前分支的对应文件上，可以在控制台接受或拒绝变更内容，和`git checkout B -- FILE_NAME`的区别就是这个命令会征求你的意见是否替换某个变更，而不带`--patch`的命令会直接覆盖文件。
 
-**设置远程跟踪（remote tracking)的两种方法**
+**设置远程跟踪(remote tracking)的两种方法**
 
 + `git checkout -b newB origin/main` 从远程仓库中的main检出一个newB分支
 
