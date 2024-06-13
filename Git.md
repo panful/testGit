@@ -39,6 +39,18 @@
 
 服务器端钩子在某些服务器中是不允许使用的，可以把钩子保存在仓库的某个地方，然后创建一个脚本把它们复制到`.git/hooks`目录中。
 
+## 4.彻底删除某些文件
+
+```shell
+git rm fileName1 fileName2        // fileName1 fileName2 是需要删除的文件名
+git commit -m 'remove some files' // 将上一步的删除操作当作一次提交
+git filter-branch --tree-filter 'rm -f fileName1 fileName2' HEAD // 清理历史记录，注意''中的命令和第一步的文件名
+git filter-branch --prune-empty -f // 删除空的commit，删除完文件后，可能会导致某些提交看起来没有任何修改
+// 以上命令只能将当前所在分支的文件彻底删除，其他分支还可以找到关于该文件的历史记录
+```
+
+[缩减仓库的清单]([Git - git-filter-branch Documentation (git-scm.com)](https://git-scm.com/docs/git-filter-branch/zh_HANS-CN#_缩减仓库的清单))
+
 # 二、Git常用关键字
 
 ## 1.HEAD
