@@ -360,26 +360,22 @@ revert 可以撤销指定的提交内容，撤销后会生成一个新的commit
 `git show COMMIT_ID`显示COMMIT_ID提交了那些内容
 
 ## 子模块
-
-### 添加子模块
-
+### 1.添加子模块
 `git submodule add url path` 例如在当前仓库的`SubModule`目录下添加子模块`testCPP`
 
 ```shell
-git submodule add git@github.com:Yangpan08/testCPP.git SubModule/testCPP
+git submodule add git@github.com:panful/testCPP.git SubModule/testCPP
 ```
 
-注意：不能存在文件夹`SubModule/testCPP`，执行上面的命令，会自动创建`testCPP`文件夹并将仓库克隆到该文件夹
+**注意**：不能存在文件夹`SubModule/testCPP`，执行上面的命令，会自动创建`testCPP`文件夹并将仓库克隆到该文件夹
 
 然后将之前的操作提交推送到远程仓库即可：
-
 ```shell
 git add .
 git commit -m "注释：添加子模块"
 git push
 ```
 如果报错：
-
 ```
 fatal: A git directory for 'xxx' is found locally with remote(s):
   origin        xxx
@@ -391,41 +387,28 @@ or you are unsure what this means choose another name with the '--name' option.
 
 将`.git/modules`目录下对应的文件夹删除，如果还报错请执行：`git rm -r --cached XXX`将对应的子模块缓存删除
 
-### 拉取子模块
-
+### 2.拉取子模块
 - 首次克隆仓库：`git clone --recursive url`url是仓库的地址
 - 已经拉取了父仓库，子模块没有拉取 `git submodule update --init --recursive`，`git pull --recurse-submodules`
 - 已经拉取了父仓库，子模块没有拉取 `git submodule update --init`
 
-### 更新子模块
-
-- 在父目录中操作
-
+### 3.更新子模块
 ```shell
 $ git submodule update              // 与主仓库中的子模块代码同步
 $ git submodule update --remote     // 与子仓库中代码同步（同步所有的子模块）
 $ git submodule update --remote xxx // 指定需要同步的子模块
 ```
+### 4.设置子模块的提交commit
+添加子模块时，子模块的commit id就是保存在远端的子模块commit id，如果重新克隆代码，子模块的checkout id就是该commit id。
 
-- 在子模块目录中操作
+如果要修改子模块的commit id，只需要在子模块中使用`git switch -d commit_id`将子模块check out到想要的commit id，然后`git add, git commit -m '注释', git push`就可以修改子模块的commit id，（和 .gitsubmodule 中子模块的 branch = commit_id 没有关系，没有必要设置这个值。如果使用github，可以在github网页端看到子模块的commit id）
 
-```shell
-git pull
-```
-
-**注意**：如果更新了子模块使用`git status`会提示：`new commits`，是因为本地的子模块和远程的子模块的commit ID不一致，可以根据需要提交更改或丢弃。
-
-`modified content` ：代码有修改但未提交, `new commits`：代码修改并提交
+**注意**：如果子模块的commit id 和原来的子模块commit id不一样，使用`git status`会提示：`new commits`，
+`git status` 提示 `modified content` 表示代码有修改但未提交, `new commits`表示代码修改并提交
 
 可以直接在 `.gitmodules` 文件里面加上 `ignore = all` 忽略掉所有的主模块与子模块的关联
 
 
-### 设置子模块的分支
-
-`git config -f .gitmodules submodule.SubModuleName.branch BranchName`将子模块`SubModuleName`的分支指定为`BranchName`，子模块名可以在`.gitmodules`文件查看
-
-`git submodule set-branch -b BranchName Path` `BranchName`是需要设置的分支名，`Path`是需要指定分支的子模块名，就是`.gitmodules`中的path，或者直接修改.gitmodules文件即可`branch =  BranchName`
 
 
-
-**设置了分支，拉取的子模块还是没有更改分支，不知为何，后续再改**
+修改.gitmodules文件即可`branch = commit_id`
